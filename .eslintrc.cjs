@@ -25,6 +25,9 @@ module.exports = {
       parser: 'vue-eslint-parser',
     },
   ],
+  rules: {
+    'vue/multi-word-component-names': 'off',
+  },
   parserOptions: {
     ecmaVersion: 'latest'
   }
