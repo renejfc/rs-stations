@@ -1,54 +1,62 @@
 <script setup lang="ts">
 import { Input } from '@/components/ui'
-import { computed, ref, withDefaults } from 'vue'
+import { computed, nextTick, ref, watch, withDefaults } from 'vue'
 import { type Selectable, AutocompleteList, AutocompleteItem, type AutocompleteProps } from '.'
 
 const props = withDefaults(defineProps<AutocompleteProps>(), {
-  data: () => []
+  suggestions: () => []
 })
 
 const emit = defineEmits<{
-  select: [name: string, id: string]
+  selection: [obj: Selectable]
 }>()
 
 const searchValue = ref('')
 const selecting = ref(false)
 const selection = ref<Selectable | null>(null)
+const listOpen = ref(false)
 
 const searchResults = computed(() => {
   if (!searchValue.value) return []
 
-  return props.data.filter((item) => {
-    return item.label.toLowerCase().includes(searchValue.value?.toLowerCase())
+  return props.suggestions.filter((item) => {
+    return item.label.toLowerCase().includes(searchValue.value.toLowerCase())
   })
 })
 
 function setSelection(valueId: string) {
   selecting.value = true
-  searchValue.value = props.data.find((item) => item.id === valueId)?.label || ''
-  selection.value = props.data.find((item) => item.id === valueId) || null
+  searchValue.value = props.suggestions.find((item) => item.id === valueId)?.label || ''
+  selection.value = props.suggestions.find((item) => item.id === valueId) || null
 
   if (selection.value) {
-    emit('select', selection.value.label, selection.value.id)
+    emit('selection', selection.value)
   }
 
-  selecting.value = false
+  nextTick(() => {
+    selecting.value = false
+    listOpen.value = false
+  })
 }
 
 function resetInputText() {
   if (!selecting.value) return
   searchValue.value = selection.value?.label || ''
 }
+
+watch(searchResults, (newResults) => {
+  listOpen.value = newResults.length > 0
+})
 </script>
 <template>
   <div>
     <Input v-model="searchValue" @blur="resetInputText" />
-    <AutocompleteList>
+    <AutocompleteList :isOpen="listOpen">
       <AutocompleteItem
         v-for="item in searchResults"
         :key="item.id"
-        :isSelected="item.label === selection?.label"
-        :valueId="item.id || item.label"
+        :isSelected="item.id === selection?.id"
+        :valueId="item.id"
         @select="setSelection"
       >
         {{ item.label }}

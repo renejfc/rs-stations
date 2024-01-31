@@ -6,7 +6,12 @@ export type Selectable = {
 
 // Autocomplete
 export type AutocompleteProps = {
-  data: Selectable[]
+  suggestions: Selectable[]
+}
+
+// AutocompleteList
+export type AutocompleteListProps = {
+  isOpen: boolean
 }
 
 // AutocompleteItem
