@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Input } from '@/components/ui'
-import { computed, nextTick, ref, watch, withDefaults } from 'vue'
+import { computed, nextTick, ref, withDefaults } from 'vue'
 import { type Selectable, AutocompleteList, AutocompleteItem, type AutocompleteProps } from '.'
 
 const props = withDefaults(defineProps<AutocompleteProps>(), {
@@ -39,18 +39,20 @@ function setSelection(valueId: string) {
   })
 }
 
-function resetInputText() {
-  if (!selecting.value) return
-  searchValue.value = selection.value?.label || ''
+function handleInputBlur() {
+  setTimeout(() => {
+    searchValue.value = selection.value?.label || ''
+    listOpen.value = false
+  }, 100)
 }
 
-watch(searchResults, (newResults) => {
-  listOpen.value = newResults.length > 0
-})
+function handleInputFocus() {
+  listOpen.value = true
+}
 </script>
 <template>
   <div>
-    <Input v-model="searchValue" @blur="resetInputText" />
+    <Input v-model="searchValue" @blur="handleInputBlur" @focus="handleInputFocus" />
     <AutocompleteList :isOpen="listOpen">
       <AutocompleteItem
         v-for="item in searchResults"
