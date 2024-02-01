@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { AutocompleteItemProps } from '.'
+import { type AutocompleteItemProps, AutocompleteSeparator } from '.'
+import { cn } from '@/utils'
 
 defineProps<AutocompleteItemProps>()
 
@@ -12,7 +13,18 @@ function select(valueId: string) {
 }
 </script>
 <template>
-  <li @click="select(valueId)">
+  <li
+    @click="select(valueId)"
+    :class="
+      cn(
+        'relative flex flex-col w-full select-none rounded-sm text-sm hover:bg-primary',
+        {
+          'bg-muted': isSelected,
+        }
+      )
+    "
+  >
     <slot />
+    <AutocompleteSeparator />
   </li>
 </template>

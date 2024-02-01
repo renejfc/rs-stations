@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Input } from '@/components/ui'
+import { cn } from '@/utils'
+import { Input, Label } from '@/components/ui'
 import { computed, nextTick, ref, withDefaults } from 'vue'
 import { type Selectable, AutocompleteList, AutocompleteItem, type AutocompleteProps } from '.'
 
@@ -52,7 +53,10 @@ function handleInputFocus() {
 </script>
 <template>
   <div>
-    <Input v-model="searchValue" @blur="handleInputBlur" @focus="handleInputFocus" />
+    <Label>
+      {{ label }}
+      <Input v-model="searchValue" @blur="handleInputBlur" @focus="handleInputFocus" :placeholder="placeholder" />
+    </Label>
     <AutocompleteList :isOpen="listOpen">
       <AutocompleteItem
         v-for="item in searchResults"
@@ -61,7 +65,7 @@ function handleInputFocus() {
         :valueId="item.id"
         @select="setSelection"
       >
-        {{ item.label }}
+        <span :class="cn('py-1.5 pl-8 pr-2 text-sm font-semibold')">{{ item.label }}</span>
       </AutocompleteItem>
     </AutocompleteList>
   </div>

@@ -7,6 +7,8 @@ export type Selectable = {
 // Autocomplete
 export type AutocompleteProps = {
   suggestions: Selectable[]
+  placeholder?: string
+  label?: string
 }
 
 // AutocompleteList

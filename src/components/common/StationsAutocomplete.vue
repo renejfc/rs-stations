@@ -10,6 +10,6 @@ const normalizedData: Selectable[] = data.map((item) => ({
 
 <template>
   <div class="container pt-10">
-    <Autocomplete :suggestions="normalizedData" />
+    <Autocomplete :suggestions="normalizedData" placeholder="Search for a station" label="Station" />
   </div>
 </template>
