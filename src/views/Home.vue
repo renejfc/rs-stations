@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import StationsAutocomplete from '@/components/common/StationsAutocomplete.vue'
+import BookingsCalendar from '@/components/common/BookingsCalendar.vue'
 </script>
 
 <template>
-  <div class="container pt-10">
-    <StationsAutocomplete />
+  <div class="pt-5">
+    <BookingsCalendar />
   </div>
 </template>

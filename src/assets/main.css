@@ -12,14 +12,13 @@
     --muted-foreground: 240 5% 64.9%;
 
     --primary: 240 5.9% 10%;
-		--primary-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 98%;
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
 
     --radius: 0.5rem;
-
   }
 }
 
@@ -30,6 +29,26 @@
 
   body {
     @apply min-h-screen bg-background font-sans text-foreground antialiased;
+  }
+
+  /* === Scrollbars === */
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+    @apply h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply !bg-muted;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-sm !bg-muted-foreground/30;
+  }
+
+  /* Firefox */
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color#browser_compatibility */
+  html {
+    scrollbar-color: hsl(215.4 16.3% 46.9% / 0.3);
   }
 
   .antialised {
