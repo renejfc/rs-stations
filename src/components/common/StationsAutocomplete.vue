@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Autocomplete, type Selectable } from '@/components/ui'
+import { Autocomplete, type Selectable } from '@/components/ui/Autocomplete'
 import data from '@/mock.json'
 
 const normalizedData: Selectable[] = data.map((item) => ({

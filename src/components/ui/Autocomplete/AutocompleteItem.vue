@@ -16,12 +16,9 @@ function select(valueId: string) {
   <li
     @click="select(valueId)"
     :class="
-      cn(
-        'relative flex flex-col w-full select-none rounded-sm text-sm hover:bg-primary',
-        {
-          'bg-muted': isSelected,
-        }
-      )
+      cn('relative flex w-full select-none flex-col rounded-sm text-sm hover:bg-primary', {
+        'bg-muted': isSelected
+      })
     "
   >
     <slot />
