@@ -25,7 +25,7 @@ const searchResults = computed(() => {
   })
 })
 
-function setSelection(valueId: string) {
+function setSelection(valueId: Selectable['id']) {
   selecting.value = true
   searchValue.value = props.suggestions.find((item) => item.id === valueId)?.label || ''
   selection.value = props.suggestions.find((item) => item.id === valueId) || null

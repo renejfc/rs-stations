@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useDate, type VirtualMonth } from '@/composables'
 import { Button } from '@/components/ui'
+import { Picker } from '@/components/ui/Calendar'
+import { useDate, type VirtualMonth } from '@/composables'
 import { RightCaret, LeftCaret } from '@/components/ui/Icons'
 import {
   addWeeks,
@@ -18,9 +18,7 @@ import {
 const date = defineModel<Date>('date', { required: true })
 const month = defineModel<VirtualMonth>('month', { required: true })
 
-const { getMonthName, getVirtualWeekNumber, getLastWeekOfVirtualMonth, getVirtualMonth } = useDate()
-
-const dateStr = computed(() => `${getMonthName(month.value)}, Week ${getVirtualWeekNumber(month.value, date.value)}`)
+const { getLastWeekOfVirtualMonth, getVirtualMonth } = useDate()
 
 function nextWeek() {
   let nextWeekDate = addWeeks(date.value, 1)
@@ -68,13 +66,13 @@ function prevWeek() {
 }
 </script>
 <template>
-  <div class="flex flex-col items-center">
-    <section class="mb-10 flex w-full justify-center gap-3 text-center">
+  <div class="flex flex-col">
+    <section class="mb-10 flex w-full items-center justify-center gap-3 text-center">
       <Button size="icon" variant="outline" @click="prevWeek"> <LeftCaret /></Button>
-      <h1 class="w-40 self-center text-2xl font-semibold uppercase">{{ dateStr }}</h1>
+      <Picker v-model="date" />
       <Button size="icon" variant="outline" @click="nextWeek"> <RightCaret /></Button>
     </section>
-    <section class="flex flex-col flex-wrap justify-center gap-0 md:flex-row">
+    <section class="flex w-full flex-row flex-wrap justify-center gap-3">
       <slot />
     </section>
   </div>
