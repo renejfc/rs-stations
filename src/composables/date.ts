@@ -1,42 +1,75 @@
-type DateFormat = Intl.DateTimeFormatOptions
+import {
+  format,
+  getDate,
+  startOfWeek,
+  startOfMonth,
+  endOfMonth,
+  eachWeekOfInterval,
+  isSameDay,
+  isSameMonth,
+  eachDayOfInterval,
+  endOfWeek
+} from 'date-fns'
+export type VirtualMonth = Date[][]
 
 export function useDate() {
-  function getMonthName({ date, format = 'short' }: { date: Date; format?: DateFormat['month'] }) {
-    return date.toLocaleString('default', { month: format })
+  function getVirtualMonth(date: Date) {
+    const weeks = eachWeekOfInterval(
+      {
+        start: startOfMonth(date),
+        end: endOfMonth(date)
+      },
+      { weekStartsOn: 1 }
+    )
+
+    const monthCertainDate = weeks[2]
+
+    console.log(weeks.map((week) => getVirtualWeekdays(week, monthCertainDate)))
+    return weeks.map((week) => getVirtualWeekdays(week, monthCertainDate))
   }
 
-  function getWeekdayName({ date, format = 'short' }: { date: Date; format?: DateFormat['weekday']}) {
-    return date.toLocaleString('default', { weekday: format })
+  function getVirtualWeek(virtualMonth: VirtualMonth, date: Date) {
+    return virtualMonth.find((week) => week.some((day) => isSameDay(day, date)))
   }
 
-  function getWeekdayDayNumber({ date, format = '2-digit' }: { date: Date; format?: DateFormat['day']}) {
-    return date.toLocaleString('default', { day: format })
+  function getLastWeekOfVirtualMonth(virtualMonth: VirtualMonth) {
+    return virtualMonth[virtualMonth.length - 1]
   }
 
-  function adjustDateToDayOfWeek(date: Date, dayOffset: number) {
-    const currentDayOfWeek = date.getDay()
-    const offsetFromCurrentDay = dayOffset - currentDayOfWeek
-    date.setDate(date.getDate() + offsetFromCurrentDay)
+  function getWeekdayName(date: Date) {
+    return format(date, 'EE')
   }
 
-  function isDayInCurrentMonthAndWeek(day: Date, currentMonth: number, currentWeekNumber: number) {
-    return day.getMonth() === currentMonth && getWeekNumberOfMonth(day) === currentWeekNumber
+  function getVirtualWeekNumber(month: VirtualMonth, date: Date) {
+    const weekIndex = month.findIndex((week) => week.some((day) => isSameDay(day, date)))
+    return weekIndex + 1
   }
 
-  function getWeekNumberOfMonth(date: Date) {
-    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-    const dayOfWeek = firstDayOfMonth.getDay()
-    const firstWeekDay = firstDayOfMonth.getDate() - dayOfWeek
-    const offsetDate = date.getDate() - firstWeekDay
-    return Math.ceil(offsetDate / 7)
+  function getWeekdayDayNumber(date: Date) {
+    return getDate(date)
+  }
+
+  function getMonthName(month: VirtualMonth) {
+    const lastWeek = month[month.length - 1]
+    return format(lastWeek[0], 'MMM')
+  }
+
+  function getVirtualWeekdays(date: Date, monthCertainDate: Date) {
+    const weekDays = eachDayOfInterval({
+      start: startOfWeek(date, { weekStartsOn: 1 }),
+      end: endOfWeek(date, { weekStartsOn: 1 })
+    })
+
+    return weekDays.filter((day) => isSameMonth(monthCertainDate, day))
   }
 
   return {
     getMonthName,
     getWeekdayName,
     getWeekdayDayNumber,
-    getWeekNumberOfMonth,
-    adjustDateToDayOfWeek,
-    isDayInCurrentMonthAndWeek
+    getVirtualMonth,
+    getVirtualWeek,
+    getVirtualWeekNumber,
+    getLastWeekOfVirtualMonth
   }
 }
