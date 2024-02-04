@@ -69,9 +69,9 @@ function prevWeek() {
 </script>
 <template>
   <div class="flex flex-col items-center">
-    <section class="mb-10 flex gap-3 text-center">
+    <section class="mb-10 flex w-full justify-center gap-3 text-center">
       <Button size="icon" variant="outline" @click="prevWeek"> <LeftCaret /></Button>
-      <h1 class="self-center align-middle text-2xl font-semibold uppercase">{{ dateStr }}</h1>
+      <h1 class="w-40 self-center text-2xl font-semibold uppercase">{{ dateStr }}</h1>
       <Button size="icon" variant="outline" @click="nextWeek"> <RightCaret /></Button>
     </section>
     <section class="flex flex-col flex-wrap justify-center gap-0 md:flex-row">

@@ -13,24 +13,22 @@ const weekdays = computed(() => getVirtualWeek(month.value, date.value))
 </script>
 <template>
   <Calendar v-model:month="month" v-model:date="date">
-    <div v-for="(weekday, i) in weekdays" :key="i">
-      <CalendarTile :date="weekday">
-        <Table>
-          <TableCaption class="mb-1">List of bookings</TableCaption>
-          <TableHeader>
-            <TableRow class="hover:bg-transparent">
-              <TableHead> Customer </TableHead>
-              <TableHead class="text-right"> Period </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell> Abdhul Akhmeh Istarion Dahmel </TableCell>
-              <TableCell class="text-right"> Start </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </CalendarTile>
-    </div>
+    <CalendarTile :date="weekday" v-for="(weekday, i) in weekdays" :key="i">
+      <Table>
+        <TableCaption class="mb-1">List of bookings</TableCaption>
+        <TableHeader>
+          <TableRow class="hover:bg-transparent">
+            <TableHead> Customer </TableHead>
+            <TableHead class="text-right"> Period </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell> Abdhul Akhmeh Istarion Dahmel </TableCell>
+            <TableCell class="text-right"> Start </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </CalendarTile>
   </Calendar>
 </template>

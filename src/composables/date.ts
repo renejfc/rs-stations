@@ -24,7 +24,6 @@ export function useDate() {
 
     const monthCertainDate = weeks[2]
 
-    console.log(weeks.map((week) => getVirtualWeekdays(week, monthCertainDate)))
     return weeks.map((week) => getVirtualWeekdays(week, monthCertainDate))
   }
 
