@@ -1,1 +1,1 @@
-export { default as StationsAutocomplete } from './StationsAutocomplete.vue'
+export { default as BookingsCalendar } from './BookingsCalendar.vue'

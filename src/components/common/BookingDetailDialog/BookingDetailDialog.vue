@@ -10,7 +10,7 @@ const { dialogState, bookingInfo } = useBookingDetailDialog()
 
 const bookingDetail = computed(() => {
   if (!bookingInfo.value) return null
-  
+
   return {
     customer: bookingInfo.value.customerName,
     startDate: format(bookingInfo.value.startDate, 'MMM, dd - yyyy'),
