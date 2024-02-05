@@ -3,7 +3,7 @@ import BookingsCalendar from '@/components/common/BookingsCalendar.vue'
 </script>
 
 <template>
-  <div class="pt-5">
+  <div class="my-10 h-full">
     <BookingsCalendar />
   </div>
 </template>

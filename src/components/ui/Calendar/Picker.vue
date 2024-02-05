@@ -47,10 +47,15 @@ const isSelectedYear = (year: number) => getYear(date.value) === year
           v-for="month in monthsList"
           :key="month"
           :class="cn('px-4 py-2 hover:bg-primary hover:text-background', { 'bg-accent': isSelectedMonth(month) })"
-          @click="() => { changeMonth(month); toggleMonthPicker(); }"
+          @click="
+            () => {
+              changeMonth(month)
+              toggleMonthPicker()
+            }
+          "
           role="option"
         >
-          {{ format(new Date(0, month), 'MMMM')}}
+          {{ format(new Date(0, month), 'MMMM') }}
         </li>
       </ul>
     </div>
@@ -68,7 +73,12 @@ const isSelectedYear = (year: number) => getYear(date.value) === year
           v-for="year in yearsList"
           :key="year"
           :class="cn('px-4 py-2 hover:bg-primary hover:text-background', { 'bg-accent': isSelectedYear(year) })"
-          @click="() => { changeYear(year); toggleYearPicker(); }"
+          @click="
+            () => {
+              changeYear(year)
+              toggleYearPicker()
+            }
+          "
           role="option"
         >
           {{ year }}
