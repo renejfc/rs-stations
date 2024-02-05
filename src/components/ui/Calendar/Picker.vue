@@ -34,12 +34,17 @@ const isSelectedYear = (year: number) => getYear(date.value) === year
 <template>
   <div class="flex">
     <div class="relative">
-      <Button variant="outline" size="lg" class="text-xl uppercase tracking-tighter" @click="toggleMonthPicker">
+      <Button
+        variant="outline"
+        size="lg"
+        class="rounded-r-none text-xl uppercase tracking-tighter"
+        @click="toggleMonthPicker"
+      >
         <span class="text-2xl uppercase">{{ format(date, 'MMM') }}</span>
       </Button>
       <ul
         v-if="selectingMonth"
-        class="absolute z-50 mt-1 w-full cursor-pointer overflow-hidden rounded-md border border-border bg-background text-foreground shadow-md"
+        class="absolute z-50 mt-1 w-full cursor-pointer overflow-hidden rounded-md rounded-t-none border border-border bg-background shadow-md"
         role="listbox"
         aria-label="Select Month"
       >
@@ -60,13 +65,17 @@ const isSelectedYear = (year: number) => getYear(date.value) === year
       </ul>
     </div>
     <div class="relative">
-      <Button variant="outline" size="lg" class="text-xl uppercase tracking-tighter" @click="toggleYearPicker">
+      <Button
+        variant="outline"
+        size="lg"
+        class="rounded-l-none text-xl uppercase tracking-tighter"
+        @click="toggleYearPicker"
+      >
         <span class="text-2xl uppercase">{{ getYear(date) }}</span>
       </Button>
       <ul
         v-if="selectingYear"
-        class="absolute z-50 mt-1 w-full cursor-pointer overflow-hidden rounded-md border border-border bg-background text-foreground shadow-md"
-        role="listbox"
+        class="absolute z-50 mt-1 w-full cursor-pointer overflow-hidden rounded-md rounded-t-none border border-border bg-background shadow-md"
         aria-label="Select Year"
       >
         <li

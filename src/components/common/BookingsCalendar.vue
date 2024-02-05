@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import mock from '@/mock.json'
 import { useDate } from '@/composables'
 import { ref, computed, onMounted } from 'vue'
 import { isSameDay, startOfDay } from 'date-fns'
@@ -7,9 +6,11 @@ import { getStations } from '@/services/stations'
 import type { Booking, Station } from '@/common/types'
 import { Calendar, CalendarTile } from '@/components/ui/Calendar'
 import { Autocomplete, type Selectable } from '@/components/ui/Autocomplete'
+import { BookingDetailDialog, useBookingDetailDialog } from '@/components/common/BookingDetailDialog'
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/Table'
 
 const { getVirtualMonth, getVirtualWeek } = useDate()
+const { getBookingInfoAndOpen } = useBookingDetailDialog()
 
 const date = ref(new Date())
 const month = computed(() => getVirtualMonth(date.value))
@@ -69,8 +70,13 @@ onMounted(async () => {
               <TableHead class="text-right"> Period </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            <TableRow v-for="booking in getBookingsForDay(weekday)" :key="booking.id">
+          <TableBody v-if="selectedStation">
+            <TableRow
+              v-for="booking in getBookingsForDay(weekday)"
+              :key="booking.id"
+              @click="getBookingInfoAndOpen({ bookingId: booking.id, stationId: selectedStation!.id })"
+              class="cursor-help"
+            >
               <TableCell> {{ booking.customerName }} </TableCell>
               <TableCell class="text-right"> {{ getBookingPeriod(booking, weekday) }} </TableCell>
             </TableRow>
@@ -78,5 +84,6 @@ onMounted(async () => {
         </Table>
       </CalendarTile>
     </Calendar>
+    <BookingDetailDialog />
   </div>
 </template>

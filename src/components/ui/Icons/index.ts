@@ -1,3 +1,8 @@
 export { default as RightCaret } from './RightCaret.vue'
 export { default as LeftCaret } from './LeftCaret.vue'
 export { default as Close } from './Close.vue'
+export { default as Arriving } from './Arriving.vue'
+export { default as Departing } from './Departing.vue'
+export { default as Clock } from './Clock.vue'
+export { default as Person } from './Person.vue'
+export { default as Building } from './Building.vue'
